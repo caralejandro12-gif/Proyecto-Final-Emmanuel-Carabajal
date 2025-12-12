@@ -1,0 +1,57 @@
+{% extends "negocio/base.html" %} {% load static %}
+
+{% block content %}
+    <header class="masthead" style="margin-top: -50px;">
+        <div class="container">
+            <div class="masthead-subheading">Laneria - Merceria</div>
+            <div class="masthead-heading text-uppercase">ARTELANITAS</div>
+        </div>
+    </header>
+
+    <section class="page-section" id="services">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Servicios</h2>
+                <h3 class="section-subheading text-muted">Todo para tu tejido.</h3>
+            </div>
+            </div>
+    </section>
+
+    <section class="page-section bg-light" id="portfolio">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Productos Destacados</h2>
+                    <h3 class="section-subheading text-muted">Nuestra selección para ti.</h3>
+                </div>
+                
+                <div class="row">
+                    {% if products %}
+                        {% for product in products %}
+                        <div class="col-lg-4 col-sm-6 mb-4">
+                            <div class="portfolio-item">
+                                <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal{{ product.id }}">
+                                    <div class="portfolio-hover">
+                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                    </div>
+                                    {% if product.imagen %}
+                                        <img class="img-fluid" src="{{ product.imagen.url }}" alt="{{ product.nombre }}" />
+                                    {% else %}
+                                        <img class="img-fluid" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." />
+                                    {% endif %}
+                                </a>
+                                <div class="portfolio-caption">
+                                    <div class="portfolio-caption-heading">{{ product.nombre }}</div>
+                                    <div class="portfolio-caption-subheading text-muted">{{ product.categoria }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-12 text-center">
+                            <p class="text-muted">No hay productos cargados aún.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+{% endblock %}

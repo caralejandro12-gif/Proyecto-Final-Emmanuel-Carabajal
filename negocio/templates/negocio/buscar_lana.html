@@ -1,0 +1,25 @@
+{% extends "negocio/index.html" %}
+
+{% block content %}
+<section style="padding: 100px 0; text-align: center;">
+    <div class="container">
+        <h2>Buscar Lana</h2>
+        <br>
+        <form action="" method="GET">
+            <input type="text" name="marca" placeholder="Ingrese marca...">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        <hr>
+        
+        {% if lanas %}
+            <h3>Resultados encontrados:</h3>
+            <ul>
+            {% for lana in lanas %}
+                <li>{{ lana.marca }} - {{ lana.color }} - ${{ lana.precio }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

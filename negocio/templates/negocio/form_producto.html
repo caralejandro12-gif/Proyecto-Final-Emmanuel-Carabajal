@@ -1,0 +1,26 @@
+{% extends "negocio/base.html" %}
+
+{% block content %}
+<section class="page-section" style="padding-top: 100px;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Cargar Producto al Portfolio</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card p-4 shadow">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <table class="table table-borderless">
+                            {{ form.as_table }}
+                        </table>
+                        <div class="d-grid">
+                        <button type="submit" class="btn btn-warning btn-xl text-white">Publicar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
