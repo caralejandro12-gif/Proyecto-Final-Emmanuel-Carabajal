@@ -5,34 +5,79 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Artelanitas</title>
+    
     <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+    
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
+
 <body id="page-top">
     
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #212529;">
         <div class="container">
             <a class="navbar-brand" href="{% url 'inicio' %}">ARTELANITAS</a>
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
                 Menu <i class="fas fa-bars ms-1"></i>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    
                     <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'crear_lana' %}">Crear Lana</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'crear_herramienta' %}">Herramientas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'crear_cliente' %}">Clientes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'buscar_lana' %}">Buscar</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'crear_producto' %}">Nuevo Producto 📸</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'pages' %}">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+
+                    {% if user.is_authenticated %}
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-tools"></i> Administración
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><h6 class="dropdown-header">Cargar Nuevo</h6></li>
+                                <li><a class="dropdown-item" href="{% url 'crear_producto' %}">Nuevo Producto</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'crear_lana' %}">Nueva Lana</a></li>
+                                <li><a class="dropdown-item" href="{% url 'crear_herramienta' %}">Nueva Herramienta</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'crear_cliente' %}">Nuevo Cliente</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" href="{% url 'editar_perfil' %}">
+                                <i class="fas fa-user-circle"></i> {{ user.username }}
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'inbox' %}">Mensajes <i class="fas fa-envelope"></i></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link btn btn-link text-uppercase" style="text-decoration: none;">Salir</button>
+                            </form>
+                        </li>
+
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'registro' %}">Registrarse</a></li>
+                    {% endif %}
+                    
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div style="padding-top: 50px;"> {% block content %}
+    <div style="padding-top: 50px;"> 
+        {% block content %}
         {% endblock %}
     </div>
 

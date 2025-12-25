@@ -1,0 +1,29 @@
+{% extends "negocio/base.html" %}
+
+{% block content %}
+<section class="page-section" style="padding-top: 120px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% if object.imagen %}
+                    <img class="img-fluid rounded shadow" src="{{ object.imagen.url }}" alt="{{ object.nombre }}">
+                {% else %}
+                    <img class="img-fluid rounded shadow" src="https://dummyimage.com/600x400/343a40/6c757d" alt="...">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <h2 class="section-heading text-uppercase">{{ object.nombre }}</h2>
+                <h4 class="text-muted">{{ object.categoria }}</h4>
+                <p class="lead mt-4">{{ object.descripcion|safe }}</p> <p class="text-muted small">Publicado el: {{ object.fecha_creacion|date:"d M Y" }}</p>
+                
+                <a href="{% url 'inicio' %}" class="btn btn-secondary mt-3">Volver</a>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'product_update' object.id %}" class="btn btn-warning mt-3">Editar</a>
+                    <a href="{% url 'product_delete' object.id %}" class="btn btn-danger mt-3">Borrar Producto</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card p-4 shadow">
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <table class="table table-borderless">
                             {{ form.as_table }}

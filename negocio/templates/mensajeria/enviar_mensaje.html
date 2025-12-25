@@ -1,0 +1,29 @@
+{% extends "negocio/base.html" %}
+
+{% block content %}
+<section class="page-section" style="padding-top: 120px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-dark text-white p-4">
+                        <h3 class="m-0 text-uppercase text-warning">Enviar Mensaje</h3>
+                    </div>
+                    <div class="card-body p-5">
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            {{ form.as_p }}
+                            
+                            <div class="mt-4 d-flex justify-content-between">
+                                <a href="{% url 'inbox' %}" class="btn btn-secondary text-uppercase">Cancelar</a>
+                                <button type="submit" class="btn btn-primary btn-xl text-uppercase">Enviar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

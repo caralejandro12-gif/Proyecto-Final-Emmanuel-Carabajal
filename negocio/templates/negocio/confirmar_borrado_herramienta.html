@@ -1,0 +1,18 @@
+{% extends "negocio/base.html" %}
+
+{% block content %}
+<section class="page-section text-center" style="padding-top: 150px;">
+    <div class="container">
+        <div class="alert alert-danger shadow">
+            <h3>⚠️ ¿Borrar Herramienta "{{ object.nombre }}"?</h3>
+            <p>Se eliminará permanentemente.</p>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-xl">Sí, Borrar</button>
+                <a href="{% url 'inicio' %}" class="btn btn-secondary btn-xl">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

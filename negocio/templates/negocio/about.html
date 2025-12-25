@@ -1,0 +1,34 @@
+{% extends "negocio/base.html" %}
+
+{% block content %}
+<section class="page-section" style="padding-top: 120px;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Acerca de Mí</h2>
+            <h3 class="section-subheading text-muted">La historia detrás de Artelanitas.</h3>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="team-member">
+                    {% if user.is_authenticated and user.avatar.imagen %}
+                        <img class="mx-auto rounded-circle" src="{{ user.avatar.imagen.url }}" alt="..." style="width: 200px; height: 200px; object-fit: cover; border: 5px solid #ffc800;">
+                    {% else %}
+                         <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                        </span>
+                    {% endif %}
+                    
+                    <h4 class="mt-4">Tu Nombre y Apellido</h4>
+                    <p class="text-muted">Desarrollador Python & Django</p>
+                    
+                    <p class="large text-muted">
+                        Hola, soy estudiante de Coderhouse. Creé este proyecto como entrega final para demostrar mis conocimientos en el framework Django. 
+                        Artelanitas busca solucionar la gestión de stock para pequeños comercios de mercería.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

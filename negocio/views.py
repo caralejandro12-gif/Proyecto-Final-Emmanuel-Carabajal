@@ -1,3 +1,7 @@
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
@@ -11,38 +15,32 @@ from .forms import *
     
 def home(request):
     productos = Product.objects.all()
+    lanas = Lana.objects.all()
+    herramientas = Herramienta.objects.all() 
     
-    # --- DIAGNÓSTICO ---
-    print("----- LISTA DE PRODUCTOS -----")
-    for p in productos:
-        print(f"Producto: {p.nombre}")
-        print(f"   ¿Tiene imagen?: {bool(p.imagen)}")
-        print(f"   Ruta guardada: {p.imagen}")
-    print("------------------------------")
-    # -------------------
-
-    lanas = Lana.objects.all() 
-    return render(request, "negocio/index.html", {"products": productos, "lanas": lanas})
+    return render(request, "negocio/index.html", {
+        "products": productos, 
+        "lanas": lanas,
+        "herramientas": herramientas})
 
 # --- VISTAS DE FORMULARIOS ---
 
 def crear_lana(request):
     if request.method == "POST":
         # Si el usuario llenó el form y dio Enter
-        form = LanaForm(request.POST)
+        form = LanaForm(request.POST, request.FILES) # Creamos el formulario con los datos ingresados
         if form.is_valid():
             form.save() # Guardamos en la BD
             return redirect('inicio')
     else:
-        # Si el usuario solo entró a la página
+        
         form = LanaForm() # Creamos el formulario vacío
-    
-    # IMPORTANTE: Enviamos "form" al HTML para que se vean los campos
+
     return render(request, "negocio/form_lana.html", {"form": form})
 
 def crear_herramienta(request):
     if request.method == "POST":
-        form = HerramientaForm(request.POST)
+        form = HerramientaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('inicio')
@@ -94,3 +92,57 @@ def crear_producto(request):
         form = ProductForm()
     
     return render(request, "negocio/form_producto.html", {"form": form})
+
+# Lo nuevo para entrega final
+# 1. CBV de DETALLE (Pública)
+class ProductDetail(DetailView):
+    model = Product
+    template_name = "negocio/detalle_producto.html"
+    
+class LanaDetail(DetailView):
+    model = Lana
+    template_name = "negocio/detalle_lana.html"
+
+class HerramientaDetail(DetailView):
+    model = Herramienta
+    template_name = "negocio/detalle_herramienta.html"
+
+# 2. CBV de BORRADO (Requiere Login - Usamos Mixin)
+class ProductDelete(LoginRequiredMixin, DeleteView):
+    model = Product
+    template_name = "negocio/confirmar_borrado.html"
+    success_url = reverse_lazy('inicio')
+
+# 3. CBV de EDICIÓN (Requiere Login - Usamos Mixin)
+class ProductUpdate(LoginRequiredMixin, UpdateView):
+    model = Product
+    template_name = "negocio/form_producto_editar.html"
+    # Estos son los campos que dejarás editar
+    fields = ['nombre', 'categoria', 'subtitulo', 'descripcion', 'imagen'] 
+    success_url = reverse_lazy('inicio')
+    
+def about(request):
+    return render(request, "negocio/about.html")
+
+
+class LanaUpdate(LoginRequiredMixin, UpdateView):
+    model = Lana
+    template_name = "negocio/form_lana_editar.html"
+    fields = ['marca', 'color', 'precio', 'imagen'] 
+    success_url = reverse_lazy('inicio')
+
+class LanaDelete(LoginRequiredMixin, DeleteView):
+    model = Lana
+    template_name = "negocio/confirmar_borrado_lana.html"
+    success_url = reverse_lazy('inicio')
+    
+class HerramientaUpdate(LoginRequiredMixin, UpdateView):
+    model = Herramienta
+    template_name = "negocio/form_herramienta_editar.html"
+    fields = ['nombre', 'medida', 'imagen'] 
+    success_url = reverse_lazy('inicio')
+
+class HerramientaDelete(LoginRequiredMixin, DeleteView):
+    model = Herramienta
+    template_name = "negocio/confirmar_borrado_herramienta.html"
+    success_url = reverse_lazy('inicio')
