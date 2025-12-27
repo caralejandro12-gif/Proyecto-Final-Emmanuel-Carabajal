@@ -11,6 +11,7 @@ Proyecto final para el curso de **Python & Django** en Coderhouse.
 * **Perfil de Usuario:** Posibilidad de editar datos personales (nombre, email).
 * **Avatar:** Carga y visualización de imagen de perfil (Avatar) personalizada.
 * **Logout:** Cierre de sesión seguro.
+* **Superuser:** usuario: admin / password: 1234
 
 ### 2. Gestión de Contenido (CRUD Completo)
 El sistema permite Crear, Leer, Actualizar y Borrar (CRUD) tres tipos de ítems diferentes, todos con soporte para **subida de imágenes**:
